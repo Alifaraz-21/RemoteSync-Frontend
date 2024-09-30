@@ -61,11 +61,11 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
       }`}
     >
       <div
-        className="w-full h-full bg-black opacity-70 absolute left-0 top-0 z-20"
+        className="w-full h-full bg-[#786FB9] opacity-50 absolute left-0 top-0 z-20"
         onClick={closeModal}
       ></div>
-      <div className="md:w-[30vw] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
-        <input
+			<div className="md:w-[30vw] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
+      <input
           type="text"
           name="title"
           value={taskData.title}
@@ -142,7 +142,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           />
         </div>
         <button
-          className="w-full mt-3 rounded-md h-9 bg-orange-400 text-blue-50 font-medium"
+          className="w-full mt-3 rounded-md h-9 bg-[#786FB9] text-blue-50 font-medium hover:bg-slate-300 duration-300 ease-in-out hover:text-[#786FB9]"
           onClick={handleSubmit}
         >
           Submit Task
