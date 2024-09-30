@@ -13,7 +13,6 @@ const Signup = () => {
             console.log(values);
             axiosInstance.post('/api/register', values);
             message.success('Thank you! We will contact you soon');
-
         } catch (error) {
             console.error('Error submitting form:', error);
         }
@@ -22,9 +21,11 @@ const Signup = () => {
     const onCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
     };
+    
     const handleContinue = () => {
         setIsModalVisible(true);
     };
+    
     const handlelogin = () => {
         window.location.href = '/';  // Redirect to login page
     };
@@ -32,13 +33,13 @@ const Signup = () => {
     return (
         <div className='signup-section'>
             <div className='main1'>
-                <Row>
-                    <Col>
+                <Row gutter={[16, 16]} justify="center" align="middle">
+                    <Col xs={24} sm={8} md={6} lg={6}>
                         <div className='image1-container'>
                             <img src='https://i.ibb.co/ZhBVpcD/image2435.png' alt='image1' className='image1' />
                         </div>
                     </Col>
-                    <Col>
+                    <Col xs={24} sm={16} md={12} lg={12}> {/* Increased form column span */}
                         <div className='container'>
                             <h3 className='logo'>RemoteSync</h3>
                             <h6 className='signup-heading'>Sign up to continue</h6>
@@ -46,7 +47,7 @@ const Signup = () => {
                                 form={form}
                                 name="register"
                                 onFinish={onFinish}
-                                style={{ maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                                style={{ maxWidth: '100%', margin: '0 auto' }}
                                 scrollToFirstError
                             >
                                 <Form.Item
@@ -123,8 +124,8 @@ const Signup = () => {
                             </Form>
                         </div>
                     </Col>
-                    <Col>
-                        <div className='image1-container'>
+                    <Col xs={24} sm={8} md={6} lg={6}>
+                        <div className='image2-container'>
                             <img src='https://i.ibb.co/b3n01bH/Whats-App-Image-2024-09-29-at-00-16-58-3a09932d-removebg-preview.png' alt='image2' className='image1' />
                         </div>
                     </Col>
@@ -133,7 +134,7 @@ const Signup = () => {
                 {/* Modal for thank you message */}
                 <Modal
                     title={null}
-                    open={isModalVisible}  // Ensure this is correctly passed
+                    open={isModalVisible}
                     footer={null}
                     centered
                     onCancel={() => setIsModalVisible(false)}
@@ -146,7 +147,6 @@ const Signup = () => {
                         </Button>
                     </div>
                 </Modal>
-
             </div>
         </div>
     );
