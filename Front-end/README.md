@@ -1,2 +1,2 @@
-# React + JavaScript + Vite
+# React + JavaScript + Vite.
 
