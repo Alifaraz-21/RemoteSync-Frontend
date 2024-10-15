@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Form, Input, Checkbox, Modal, message } from 'antd';
+import { Row, Col, Button, Form, Input, Checkbox, Modal } from 'antd';
 import axiosInstance from '../../axiosInterceptor/index';
 import '../Signup/Signup.css';
 
@@ -10,9 +10,9 @@ const Signup = () => {
 
     const onFinish = async (values) => {
         try {
-            console.log(values);
-            axiosInstance.post('/api/register', values);
-            message.success('Thank you! We will contact you soon');
+            await axiosInstance.post('/api/register', values);
+            // Show modal to inform user to verify email
+            setIsModalVisible(true);
         } catch (error) {
             console.error('Error submitting form:', error);
         }
@@ -21,25 +21,23 @@ const Signup = () => {
     const onCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
     };
-    
-    const handleContinue = () => {
-        setIsModalVisible(true);
-    };
-    
-    const handlelogin = () => {
-        window.location.href = '/';  // Redirect to login page
+
+    const handleLogin = () => {
+        // Redirect to login page
+        window.location.href = '/';
     };
 
     return (
         <div className='signup-section'>
             <div className='main1'>
-                <Row gutter={[16, 16]} justify="center" align="middle">
-                    <Col xs={24} sm={8} md={6} lg={6}>
-                        <div className='image1-container'>
-                            <img src='https://i.ibb.co/ZhBVpcD/image2435.png' alt='image1' className='image1' />
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={16} md={12} lg={12}> {/* Increased form column span */}
+                {/* Left side illustration */}
+                <div className="image1-container">
+                    <img src="https://i.ibb.co/ZhBVpcD/image2435.png" alt="left illustration" className="image1" />
+                </div>
+
+                {/* Center form */}
+                <Row gutter={[16, 16]} justify="center" align="middle" style={{ width: '100%' }}>
+                    <Col xs={24} sm={16} md={12} lg={12}>
                         <div className='container'>
                             <h3 className='logo'>RemoteSync</h3>
                             <h6 className='signup-heading'>Sign up to continue</h6>
@@ -51,7 +49,7 @@ const Signup = () => {
                                 scrollToFirstError
                             >
                                 <Form.Item
-                                    name="username"
+                                    name="userName"
                                     rules={[{ required: true, message: 'Please input your username!', whitespace: true }]}
                                 >
                                     <Input placeholder='Username' className='reg-input' />
@@ -70,7 +68,10 @@ const Signup = () => {
                                 </Form.Item>
                                 <Form.Item
                                     name="email"
-                                    rules={[{ type: 'email', message: 'The input is not valid E-mail!' }, { required: true, message: 'Please input your E-mail!' }]}
+                                    rules={[
+                                        { type: 'email', message: 'The input is not valid E-mail!' },
+                                        { required: true, message: 'Please input your E-mail!' }
+                                    ]}
                                 >
                                     <Input placeholder='Email' className='reg-input' />
                                 </Form.Item>
@@ -114,7 +115,6 @@ const Signup = () => {
                                             className='register-btn'
                                             type="primary"
                                             htmlType="submit"
-                                            onClick={handleContinue}
                                             disabled={!form.isFieldsTouched(true) || form.getFieldsError().filter(({ errors }) => errors.length).length > 0 || !isChecked}
                                         >
                                             Register
@@ -124,14 +124,14 @@ const Signup = () => {
                             </Form>
                         </div>
                     </Col>
-                    <Col xs={24} sm={8} md={6} lg={6}>
-                        <div className='image2-container'>
-                            <img src='https://i.ibb.co/b3n01bH/Whats-App-Image-2024-09-29-at-00-16-58-3a09932d-removebg-preview.png' alt='image2' className='image1' />
-                        </div>
-                    </Col>
                 </Row>
 
-                {/* Modal for thank you message */}
+                {/* Right side illustration */}
+                <div className="image2-container">
+                    <img src="https://i.ibb.co/ZhBVpcD/image2435.png" alt="right illustration" className="image2" />
+                </div>
+
+                {/* Modal for email verification */}
                 <Modal
                     title={null}
                     open={isModalVisible}
@@ -140,10 +140,12 @@ const Signup = () => {
                     onCancel={() => setIsModalVisible(false)}
                 >
                     <div style={{ textAlign: 'center' }}>
-                        <h3 className='modal-heading'>Congratulations! Your Signup Form Has Been Successfully Submitted</h3>
-                        <p className='modal-paragraph'>Welcome to the RemoteSync family! We’re excited to have you on board and can’t wait to start this amazing journey together. Your registration was successful, and we’ll be in touch soon. In the meantime, feel free to explore and get to know our community better. Welcome to the next chapter of collaboration and growth with RemoteSync!</p>
-                        <Button className='continue-btn' onClick={handlelogin}>
-                            Continue
+                        <h3 className='modal-heading'>Please verify your email</h3>
+                        <p className='modal-paragraph'>
+                            A verification link has been sent to your email. Please verify your email to proceed.
+                        </p>
+                        <Button className='continue-btn' onClick={handleLogin}>
+                            Go to Login Page
                         </Button>
                     </div>
                 </Modal>
