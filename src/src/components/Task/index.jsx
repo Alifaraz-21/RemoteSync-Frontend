@@ -1,5 +1,5 @@
 import { IoTimeOutline } from "react-icons/io5";
-import { getTime } from "../../helpers/gettime";  // Ensure this imports your helper function
+import { getTime } from "../../helpers/gettime";  // Import your time conversion function
 
 const Task = ({ task, provided }) => {
   const { title, description, priority, deadline, image, alt, tags } = task;
@@ -9,7 +9,7 @@ const Task = ({ task, provided }) => {
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className="w-full cursor-grab bg-[#fff] hover:scale-105 duration-200 ease-in-out flex flex-col justify-between gap-3 items-start shadow-sm rounded-xl px-3 py-4"
+      className="w-full cursor-grab bg-white hover:shadow-slate-800 shadow-md duration-200 ease-in-out flex flex-col justify-between gap-3 items-start rounded-xl px-3 py-4 "
     >
       {image && alt && (
         <img
@@ -36,21 +36,17 @@ const Task = ({ task, provided }) => {
       <div className="w-full border border-dashed"></div>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <IoTimeOutline
-            color={"#666"}
-            size={19}
-          />
-          <span className="text-[16px] text-gray-700">{getTime(deadline)}</span>
+          <IoTimeOutline color={"#666"} size={19} />
+          {/* Use getTime to convert minutes to readable format */}
+          <span className="text-[13px] text-gray-700">{getTime(deadline)}</span>
         </div>
         <div
           className={`w-[60px] rounded-full h-[5px] ${
             priority === "high"
-              ? "bg-red-500"       // High priority: Red
+              ? "bg-red-500"
               : priority === "medium"
-              ? "bg-orange-500"    // Medium priority: Orange
-              : priority === "low"
-              ? "bg-blue-500"      // Low priority: Blue
-              : "bg-green-300"      // Default if priority is not set
+              ? "bg-orange-500"
+              : "bg-blue-500"
           }`}
         ></div>
       </div>
