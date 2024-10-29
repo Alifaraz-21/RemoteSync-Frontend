@@ -25,7 +25,7 @@ const sendVerificationEmail = async (user, res) => {
   const { _id, email } = user;
 
   const token = jwt.sign({ id: _id }, process.env.JWT_SECRET, { expiresIn: '6h' });
-  const currentUrl = "http://localhost:3000/api/";
+  const currentUrl = "http://localhost:3002/api/";;
 
 
   const mailOptions = {
