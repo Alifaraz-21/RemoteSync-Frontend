@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Form, Input, Checkbox, Modal } from 'antd';
-import axiosInstance from '../../axiosInterceptor/index';
+import axiosInstance from '../../../axiosInterceptor/index';
 import '../Signup/Signup.css';
 
 const Signup = () => {

@@ -4,7 +4,7 @@ import '../Login/Login.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
 import { message } from 'antd';
-import axiosInstance from '../../axiosInterceptor/index';
+import axiosInstance from '../../../axiosInterceptor/index';
 
 const Login = () => {
   const navigate = useNavigate();
