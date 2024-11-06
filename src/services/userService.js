@@ -25,7 +25,7 @@ const register = async(firstName,lastName,userName,email,password)=>{
 	    await sendVerificationEmail(newUser);
         await newUser.save();
         console.log("User successfully registered and verification email sent");
-        const token = jwt.sign({ id: newUser._id},'JWT_SECRET', { expiresIn: '1h' 	
+        const token = jwt.sign({ id: newUser._id},process.env.JWT_SECRET, { expiresIn: '1h' 	
 });
      return token;   
     }catch(error){
@@ -46,7 +46,7 @@ const login = async(email,password)=>{
     if (!user.verified) {
         throw new Error('Please verify your email to log in.');
     }
-        const token = jwt.sign({id: user._id }, 'JWT_SECRET', { expiresIn: '1h' });
+        const token = jwt.sign({id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         return token;
     }catch(error){
         throw new Error(error.message || 'Error occurred during login.');
