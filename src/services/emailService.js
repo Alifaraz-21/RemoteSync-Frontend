@@ -46,4 +46,18 @@ const sendVerificationEmail = async (user, res) => {
   }
 };
 
-module.exports = { sendVerificationEmail };
+//for board member
+const sendInvitationEmail = async (email,token) => {
+  const currentUrl = "http://localhost:3000/api/";
+  const invitationLink = `${currentUrl}/accept-invitation/${token}`;
+  const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Invitation to Join Board',
+      html: `<p>You have been invited to join a board. Click <a href="${invitationLink}">here</a> to accept the invitation.</p>`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+module.exports = { sendVerificationEmail , sendInvitationEmail};
