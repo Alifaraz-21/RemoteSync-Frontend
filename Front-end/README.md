@@ -1,2 +1,0 @@
-# React + JavaScript + Vite.
-
