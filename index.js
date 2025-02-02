@@ -1,25 +1,38 @@
-const express = require('express');
-const { connectDatabase } = require('./src/config/Database');
-const Routes = require('./src/routes/Routes');
-const cors = require('cors');
-require('dotenv').config();
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import morgan from "morgan";
+import { errorHandler, routeNotFound } from "./middleware/errorMiddleware.js";
+import routes from "./routes/index.js";
+import dbConnection from "./utils/connectDB.js";
+import userRoutes from "./routes/userRoutes.js"; // Import the user routes
+
+dotenv.config();
+
+dbConnection();
+
+const port = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
+  })
+);  
 
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173', // allow requests from this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(express.urlencoded({ extended: true }));
+app.use("/api/users", userRoutes); // Use the user routes
+app.use(cookieParser());
 
-connectDatabase();
+app.use(morgan("dev"));
+app.use("/api", routes);
 
-// Use routes
-app.use('/api', Routes);
+app.use(routeNotFound);
+app.use(errorHandler);
 
-// Start server
-app.listen(3002, () => {
-  console.log('Server running on port 3002');
-});
+app.listen(port, () => console.log(`Server listening on ${port}`));
